@@ -2,10 +2,6 @@ from flask import Flask, send_file
 from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
 import pytz
-
-fuso = pytz.timezone("America/Sao_Paulo")
-agora = datetime.now(fuso).strftime("%d/%m/%Y às %H:%M")
-
 import os
 import qrcode
 
@@ -63,7 +59,9 @@ def gerar():
 
         img.save(IMAGEM_FINAL)
 
-        agora = datetime.now().strftime("%d/%m/%Y às %H:%M")
+        fuso = pytz.timezone("America/Sao_Paulo")
+        agora = datetime.now(fuso).strftime("%d/%m/%Y às %H:%M")
+
         with open(ARQUIVO_DATA, "w") as f:
             f.write(agora)
 
