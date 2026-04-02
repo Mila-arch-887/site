@@ -49,7 +49,7 @@ def gerar():
         draw = ImageDraw.Draw(img)
 
         texto = f"Consulta em {ultimo}"
-        fonte = ImageFont.truetype("DejaVuSans.ttf", 80)
+        fonte = ImageFont.load_default()
 
         bbox = draw.textbbox((0, 0), texto, font=fonte)
         largura_texto = bbox[2] - bbox[0]
