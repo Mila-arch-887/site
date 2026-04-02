@@ -1,7 +1,6 @@
 from flask import Flask, send_file
 from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime, timedelta
-import pytz
 import os
 import qrcode
 
@@ -12,7 +11,7 @@ IMAGEM_ORIGINAL = "base.png"
 IMAGEM_FINAL = "final.png"
 QR_CODE = "qrcode.png"
 
-URL_SITE = "http://127.0.0.1:5000"
+URL_SITE = "https://SEU-LINK-AQUI"
 
 def gerar_qr():
     if not os.path.exists(QR_CODE):
@@ -39,7 +38,7 @@ def gerar():
             with open(ARQUIVO_DATA, "r") as f:
                 ultimo = f.read()
         else:
-            ultimo = datetime.now().strftime("%d/%m/%Y às %H:%M")
+            ultimo = (datetime.utcnow() - timedelta(hours=3)).strftime("%d/%m/%Y às %H:%M")
 
         img = Image.open(IMAGEM_ORIGINAL)
         draw = ImageDraw.Draw(img)
@@ -47,21 +46,15 @@ def gerar():
         texto = f"Consulta em {ultimo}"
         fonte = ImageFont.load_default()
 
-        bbox = draw.textbbox((0, 0), texto, font=fonte)
-        largura_texto = bbox[2] - bbox[0]
-        altura_texto = bbox[3] - bbox[1]
-
         largura_img, altura_img = img.size
-        x = largura_img - largura_texto - 40
-        y = altura_img - altura_texto - 30
+        x = largura_img - 300
+        y = altura_img - 50
 
         draw.text((x, y), texto, fill=(0, 0, 0), font=fonte)
 
         img.save(IMAGEM_FINAL)
 
-        fuso = pytz.timezone("America/São_Paulo")
-        datetime.utcnow() - timedelta(hours=3)
-
+        agora = (datetime.utcnow() - timedelta(hours=3)).strftime("%d/%m/%Y às %H:%M")
         with open(ARQUIVO_DATA, "w") as f:
             f.write(agora)
 
@@ -72,4 +65,5 @@ def gerar():
 
 if __name__ == "__main__":
     gerar_qr()
-    app.run(host="0.0.0.0", port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
