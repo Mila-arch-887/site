@@ -11,7 +11,7 @@ IMAGEM_ORIGINAL = "base.png"
 IMAGEM_FINAL = "final.png"
 QR_CODE = "qrcode.png"
 
-URL_SITE = "https://SEU-LINK-AQUI"
+URL_SITE = "site-production-7a35.up.railway.app"
 
 def gerar_qr():
     if not os.path.exists(QR_CODE):
