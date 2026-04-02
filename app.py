@@ -59,7 +59,7 @@ def gerar():
 
         img.save(IMAGEM_FINAL)
 
-        fuso = pytz.timezone("America/Curitiba")
+        fuso = pytz.timezone("America/São_Paulo")
         datetime.utcnow() - timedelta(hours=3)
 
         with open(ARQUIVO_DATA, "w") as f:
