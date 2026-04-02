@@ -11,6 +11,8 @@ IMAGEM_ORIGINAL = "base.png"
 IMAGEM_FINAL = "final.png"
 QR_CODE = "qrcode.png"
 
+URL_SITE = (site-production-6665.up.railway.app)
+
 def gerar_qr():
     if not os.path.exists(QR_CODE):
         img = qrcode.make(URL_SITE)
