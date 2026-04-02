@@ -57,7 +57,7 @@ def gerar():
 
     img.save(IMAGEM_FINAL)
 
-    agora = (datetime.utcnow() - timedelta(hours=3)).strftime("%d/%m/%Y às %H:%M")
+    agora = datetime.now().strftime("%d/%m/%Y às %H:%M")
     with open(ARQUIVO_DATA, "w") as f:
         f.write(agora)
 
