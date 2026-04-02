@@ -38,35 +38,39 @@ def home():
 
 @app.route("/imagem")
 def gerar():
-    if os.path.exists(ARQUIVO_DATA):
-        with open(ARQUIVO_DATA, "r") as f:
-            ultimo = f.read()
-    else:
-        ultimo = datetime.now().strftime("%d/%m/%Y às %H:%M")
+    try:
+        if os.path.exists(ARQUIVO_DATA):
+            with open(ARQUIVO_DATA, "r") as f:
+                ultimo = f.read()
+        else:
+            ultimo = datetime.now().strftime("%d/%m/%Y às %H:%M")
 
-    img = Image.open(IMAGEM_ORIGINAL)
-    draw = ImageDraw.Draw(img)
+        img = Image.open(IMAGEM_ORIGINAL)
+        draw = ImageDraw.Draw(img)
 
-    texto = f"Consulta em {ultimo}"
-    fonte = ImageFont.truetype("DejaVuSans.ttf", 80)
-    
-    bbox = draw.textbbox((0, 0), texto, font=fonte)
-    largura_texto = bbox[2] - bbox[0]
-    altura_texto = bbox[3] - bbox[1]
+        texto = f"Consulta em {ultimo}"
+        fonte = ImageFont.truetype("DejaVuSans.ttf", 80)
 
-    largura_img, altura_img = img.size
-    x = largura_img - largura_texto - 40
-    y = altura_img - altura_texto - 30
+        bbox = draw.textbbox((0, 0), texto, font=fonte)
+        largura_texto = bbox[2] - bbox[0]
+        altura_texto = bbox[3] - bbox[1]
 
-    draw.text((x, y), texto, fill=(80, 80, 80), font=fonte)
+        largura_img, altura_img = img.size
+        x = largura_img - largura_texto - 40
+        y = altura_img - altura_texto - 30
 
-    img.save(IMAGEM_FINAL)
+        draw.text((x, y), texto, fill=(0, 0, 0), font=fonte)
 
-    agora = datetime.now().strftime("%d/%m/%Y às %H:%M")
-    with open(ARQUIVO_DATA, "w") as f:
-        f.write(agora)
+        img.save(IMAGEM_FINAL)
 
-    return send_file(IMAGEM_FINAL, mimetype='image/png')
+        agora = datetime.now().strftime("%d/%m/%Y às %H:%M")
+        with open(ARQUIVO_DATA, "w") as f:
+            f.write(agora)
+
+        return send_file(IMAGEM_FINAL, mimetype='image/png')
+
+    except Exception as e:
+        return f"Erro: {e}"
 
 if __name__ == "__main__":
     gerar_qr()
