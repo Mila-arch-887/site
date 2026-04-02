@@ -1,6 +1,6 @@
 from flask import Flask, send_file
 from PIL import Image, ImageDraw, ImageFont
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import qrcode
 
@@ -57,7 +57,7 @@ def gerar():
 
     img.save(IMAGEM_FINAL)
 
-    agora = datetime.now().strftime("%d/%m/%Y às %H:%M")
+    agora = (datetime.utcnow() - timedelta(hours=3)).strftime("%d/%m/%Y às %H:%M")
     with open(ARQUIVO_DATA, "w") as f:
         f.write(agora)
 
