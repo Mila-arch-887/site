@@ -59,7 +59,7 @@ def gerar():
 
         img.save(IMAGEM_FINAL)
 
-        fuso = pytz.timezone("America/Sao_Paulo")
+        fuso = pytz.timezone("America/Curitiba")
         agora = datetime.now(fuso).strftime("%d/%m/%Y às %H:%M")
 
         with open(ARQUIVO_DATA, "w") as f:
